@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Silhouette eines Mannes">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="42%" r="60%">
+      <stop offset="0" stop-color="#6b5841"/>
+      <stop offset=".7" stop-color="#4a3c2d"/>
+      <stop offset="1" stop-color="#2e251b"/>
+    </radialGradient>
+    <clipPath id="o"><ellipse cx="60" cy="75" rx="46" ry="60"/></clipPath>
+  </defs>
+  <rect width="120" height="150" fill="#2a2219"/>
+  <ellipse cx="60" cy="75" rx="46" ry="60" fill="url(#g)"/>
+  <g clip-path="url(#o)" fill="#211b14" fill-opacity=".9">
+    <ellipse cx="60" cy="62" rx="16" ry="20"/>
+    <path d="M52 78 h16 v10 h-16z"/>
+    <path d="M18 140 C18 108 32 92 50 88 L60 104 L70 88 C88 92 102 108 102 140 Z"/>
+    <path d="M56 92 L60 104 L64 92 L62 89 h-4z" fill="#4a3c2d" fill-opacity=".9"/>
+    <path d="M44 50 C46 38 74 38 76 50 C72 45 48 45 44 50 Z"/>
+  </g>
+  <ellipse cx="60" cy="75" rx="46" ry="60" fill="none" stroke="#a89878" stroke-width="2.5"/>
+  <ellipse cx="60" cy="75" rx="51" ry="65" fill="none" stroke="#5a4a38" stroke-width="1"/>
+  <g fill="#a89878" fill-opacity=".7">
+    <circle cx="60" cy="7" r="1.6"/><circle cx="60" cy="143" r="1.6"/><circle cx="6" cy="75" r="1.6"/><circle cx="114" cy="75" r="1.6"/>
+  </g>
+</svg>

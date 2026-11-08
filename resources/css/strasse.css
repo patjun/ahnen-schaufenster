@@ -1,0 +1,915 @@
+/* Die Straße: Fenster pro Elternpaar, Wegweiser, Seitengasse. Farben und Schrift aus schaufenster.css. */
+
+body.schaufenster:has(#strasse.strasse) {
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 120% 80% at 50% 35%, #2a2219 0%, var(--grund) 70%),
+        var(--grund);
+}
+
+#strasse.strasse {
+    --holz: #3a2f24;
+    --scheibe: #2a2219;
+    --bild-b: 150px;
+    --bild-h: 188px;
+    --karte-b: 176px;
+    --dauer: 350ms;
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding: 0;
+}
+
+.strasse button {
+    font: inherit;
+    color: inherit;
+}
+
+.strasse button:focus-visible,
+.strasse .bahn:focus-visible {
+    outline: 2px solid var(--gold-hell);
+    outline-offset: 3px;
+}
+
+/* ── Kopf mit Wegweiser ─────────────────────────────────────────────────── */
+
+.kopf {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1.5rem;
+    border-bottom: 1px solid rgba(200, 169, 106, .22);
+    background: linear-gradient(180deg, #17130e, rgba(23, 19, 14, .6));
+}
+
+.kopf p {
+    margin: 0;
+}
+
+.kopf-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+}
+
+.heimweg {
+    min-height: 40px;
+    padding: .25rem .8rem;
+    border: 1px solid rgba(200, 169, 106, .55);
+    border-radius: 3px;
+    background: rgba(42, 34, 25, .8);
+    color: var(--gold-hell) !important;
+    font-size: .86rem !important;
+    cursor: pointer;
+}
+
+.heimweg:hover {
+    background: rgba(200, 169, 106, .16);
+}
+
+.kopf-titel {
+    color: var(--gold);
+    font-size: .8rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.wegweiser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 14rem;
+    padding: .3rem 1.4rem .35rem;
+    border: 1px solid rgba(200, 169, 106, .5);
+    border-radius: 3px;
+    background: var(--scheibe);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+    text-align: center;
+}
+
+.wegweiser-label {
+    color: var(--gedaempft);
+    font-size: .66rem;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+}
+
+.wegweiser-text {
+    color: var(--gold-hell);
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.kopf-rechts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .4rem;
+}
+
+.richtung {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .6rem;
+    color: var(--gedaempft);
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.richtung-linie {
+    position: relative;
+    width: 5.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(168, 152, 120, .3), var(--gold));
+}
+
+.richtung-linie::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -1px;
+    border: 4.5px solid transparent;
+    border-left: 7px solid var(--gold);
+    border-right: 0;
+}
+
+/* ── Die Bahn ───────────────────────────────────────────────────────────── */
+
+.bahn {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+    min-height: 0;
+    padding: 0 4.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-color: var(--sepia) transparent;
+    scrollbar-width: thin;
+    /* Pflaster unter den Fenstern */
+    background:
+        linear-gradient(0deg, rgba(90, 74, 56, .28), rgba(90, 74, 56, 0) 5.5rem) bottom / 100% 100% no-repeat;
+}
+
+.station {
+    flex: 0 0 auto;
+    height: 100%;
+    padding: clamp(1.25rem, 8vh, 5.5rem) 1.5rem 6rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    transition: opacity var(--dauer) ease-out, transform var(--dauer) ease-out;
+}
+
+.station::-webkit-scrollbar {
+    display: none;
+}
+
+.station.kommt {
+    opacity: 0;
+    transform: translateX(28px);
+}
+
+.station-raster {
+    display: grid;
+    grid-template-areas:
+        'fenster gabel'
+        'gasse   .';
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 1.75rem;
+}
+
+/* ── Das Fenster ────────────────────────────────────────────────────────── */
+
+.fenster {
+    grid-area: fenster;
+    margin: 7px;
+    padding: 0 1.25rem 1.1rem;
+    border: 1px solid var(--sepia);
+    border-radius: 5px;
+    background:
+        linear-gradient(165deg, rgba(243, 233, 216, .07) 0%, rgba(243, 233, 216, 0) 38%),
+        var(--scheibe);
+    box-shadow:
+        0 0 0 6px var(--holz),
+        0 0 0 7px rgba(200, 169, 106, .3),
+        0 22px 44px rgba(0, 0, 0, .5);
+}
+
+.schild {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 -1.25rem 1.1rem;
+    padding: .6rem 1rem .5rem;
+    border-bottom: 1px solid rgba(200, 169, 106, .3);
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, #3b3025, #30271d);
+    text-align: center;
+}
+
+.schild-name {
+    color: var(--gold-hell);
+    font-size: 1.08rem;
+    letter-spacing: .05em;
+}
+
+.schild-gen {
+    color: var(--gedaempft);
+    font-size: .68rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.scheibe.wechsel {
+    animation: scheibe-ein var(--dauer) ease-out;
+}
+
+@keyframes scheibe-ein {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+}
+
+.scheibe-titel {
+    margin: -.4rem 0 .6rem;
+    color: var(--gold);
+    font-size: .82rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.paar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: .35rem;
+}
+
+.ehe-zeichen {
+    align-self: flex-start;
+    margin-top: calc(var(--bild-h) / 2 - .6rem);
+    color: var(--gold-hell);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.heirat {
+    margin: .7rem 0 0;
+    color: var(--gedaempft);
+    font-size: .86rem;
+    text-align: center;
+}
+
+.scheiben-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .9rem;
+    margin-top: .6rem;
+}
+
+.scheiben-zahl {
+    min-width: 2.5rem;
+    color: var(--gedaempft);
+    font-size: .88rem;
+    text-align: center;
+}
+
+.scheiben-knopf {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(200, 169, 106, .55);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--gold-hell) !important;
+    font-size: 1.35rem !important;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.scheiben-knopf:hover {
+    background: rgba(200, 169, 106, .14);
+}
+
+.abzweig {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin-top: .75rem;
+    padding: .4rem .8rem;
+    border: 1px dashed var(--sepia);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--gold) !important;
+    font-size: .86rem !important;
+    cursor: pointer;
+}
+
+.abzweig:hover {
+    border-color: var(--gold);
+}
+
+/* ── Personenkarten ─────────────────────────────────────────────────────── */
+
+.karte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--karte-b);
+    padding: .3rem .25rem .5rem;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    text-align: center;
+}
+
+button.karte {
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+button.karte:hover {
+    background: rgba(243, 233, 216, .05);
+}
+
+.bild {
+    display: block;
+    flex: none;
+    width: var(--bild-b);
+    height: var(--bild-h);
+    padding: 4px;
+    border: 3px solid var(--gedaempft);
+    border-radius: 2px;
+    background: var(--holz);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .4);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.bild img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mit-foto .bild img {
+    filter: sepia(.12) saturate(.92);
+}
+
+button.karte:hover .bild {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .45);
+}
+
+.karte.direkt .bild {
+    border-color: var(--gold-hell);
+    box-shadow: 0 0 0 1px rgba(231, 194, 122, .25), 0 0 18px rgba(231, 194, 122, .22), 0 6px 14px rgba(0, 0, 0, .4);
+}
+
+.karte-text {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    min-width: 0;
+}
+
+.karte .name {
+    margin-top: .6rem;
+    color: var(--text);
+    font-size: 1.02rem;
+    line-height: 1.25;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+}
+
+.lebensdaten {
+    display: flex;
+    flex-direction: column;
+    margin-top: .3rem;
+    color: #dccfb6;
+    font-size: .84rem;
+    line-height: 1.4;
+}
+
+.beziehung {
+    margin-top: .35rem;
+    color: var(--gedaempft);
+    font-size: .84rem;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.direkt-zeichen {
+    margin-top: .3rem;
+    color: var(--gold-hell);
+    font-size: .72rem;
+    letter-spacing: .1em;
+}
+
+.halb {
+    align-self: inherit;
+    margin-top: .3rem;
+    padding: .05rem .5rem;
+    border: 1px solid var(--sepia);
+    border-radius: 999px;
+    color: var(--gedaempft);
+    font-size: .72rem;
+}
+
+.karte-leer .bild {
+    opacity: .55;
+    box-shadow: none;
+}
+
+.karte-leer .name {
+    color: var(--gedaempft);
+    font-style: italic;
+}
+
+/* ── Gabelung: Wegweiser-Schilder an einem Pfosten ──────────────────────── */
+
+.gabelung {
+    position: relative;
+    grid-area: gabel;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 1.5rem 0;
+}
+
+.gabelung::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -2rem;
+    left: 1.4rem;
+    width: 6px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #2e251b, var(--sepia), #2e251b);
+}
+
+.gabel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    min-width: 11.5rem;
+    min-height: 56px;
+    padding: .45rem 2rem .45rem .9rem;
+    border: 0;
+    background: linear-gradient(180deg, #4d3f2f, #3e3226);
+    color: var(--text);
+    text-align: left;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+    cursor: pointer;
+    opacity: .45;
+    transition: opacity .25s, transform .25s, background .25s;
+}
+
+.gabel:hover,
+.gabel:focus-visible {
+    opacity: .85;
+    transform: translateX(3px);
+}
+
+.gabel.gewaehlt {
+    background: linear-gradient(180deg, var(--gold-hell), var(--gold));
+    color: var(--grund);
+    opacity: 1;
+}
+
+.gabel-pfeil {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.gabel-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.gabel-linie {
+    font-size: .66rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.gabel-name {
+    font-size: 1.02rem;
+}
+
+/* ── Seitengasse ────────────────────────────────────────────────────────── */
+
+.gasse {
+    grid-area: gasse;
+    margin: 1.4rem 7px 0;
+}
+
+.gasse-knopf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid rgba(90, 74, 56, .9);
+    border-radius: 3px;
+    background: rgba(42, 34, 25, .7);
+    color: var(--gold) !important;
+    cursor: pointer;
+}
+
+.gasse-knopf:hover {
+    border-color: var(--gold);
+}
+
+.gasse-pfeil {
+    transition: transform var(--dauer);
+}
+
+.gasse-knopf[aria-expanded='true'] .gasse-pfeil {
+    transform: rotate(180deg);
+}
+
+.gasse-koerper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dauer) ease-out;
+}
+
+.gasse-koerper.offen {
+    grid-template-rows: 1fr;
+}
+
+.gasse-innen {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.gasse-titel {
+    margin: .9rem 0 .4rem;
+    color: var(--gedaempft);
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.gasse-liste {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.karte-klein {
+    --bild-b: 64px;
+    --bild-h: 80px;
+
+    flex-direction: row;
+    align-items: flex-start;
+    gap: .8rem;
+    width: 100%;
+    padding: .55rem;
+    border-left: 2px solid transparent;
+    background: rgba(42, 34, 25, .75);
+    text-align: left;
+}
+
+.karte-klein .bild {
+    padding: 2px;
+    border-width: 2px;
+}
+
+.karte-klein .name {
+    margin-top: .1rem;
+    font-size: .95rem;
+}
+
+.karte-klein .lebensdaten,
+.karte-klein .beziehung {
+    font-size: .8rem;
+}
+
+.karte-klein.direkt {
+    border-left-color: var(--gold-hell);
+}
+
+/* ── Laden und Ende ─────────────────────────────────────────────────────── */
+
+.station-laden {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 14rem;
+    padding-top: calc(clamp(1.25rem, 8vh, 5.5rem) + 8rem);
+}
+
+.laterne {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(231, 194, 122, .85), rgba(231, 194, 122, 0) 70%);
+    animation: laterne 1.6s ease-in-out infinite;
+}
+
+@keyframes laterne {
+    50% {
+        opacity: .35;
+        transform: scale(.8);
+    }
+}
+
+.laden-text {
+    margin: .8rem 0 0;
+    color: var(--gedaempft);
+    font-size: .85rem;
+    font-style: italic;
+}
+
+.station-ende {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.endschild {
+    width: 17rem;
+    margin-top: 8rem;
+    padding: 1.6rem 1.5rem 1.4rem;
+    border: 1px solid var(--sepia);
+    border-radius: 4px;
+    background: var(--scheibe);
+    box-shadow: 0 0 0 6px var(--holz), 0 18px 36px rgba(0, 0, 0, .45);
+    text-align: center;
+}
+
+.endschild p {
+    margin: 0;
+}
+
+.endschild-zier {
+    display: block;
+    color: var(--gold);
+    font-size: 1.5rem;
+}
+
+.endschild-titel {
+    margin-top: .4rem !important;
+    color: var(--gold-hell);
+    font-size: 1.2rem;
+}
+
+.endschild-text {
+    margin-top: .5rem !important;
+    color: var(--gedaempft);
+    font-size: .9rem;
+    font-style: italic;
+}
+
+.endschild .gabel {
+    justify-content: center;
+    margin: 1rem auto 0;
+    padding-right: 2rem;
+}
+
+.fenster-verborgen .karte {
+    margin: 0 auto;
+}
+
+.fenster-hinweis {
+    max-width: 15rem;
+    margin: .6rem auto 0;
+    color: var(--gedaempft);
+    font-size: .86rem;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ── Blättern mit der Maus ──────────────────────────────────────────────── */
+
+.blaettern {
+    position: fixed;
+    bottom: 1.5rem;
+    z-index: 2;
+    display: none;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(200, 169, 106, .6);
+    border-radius: 50%;
+    background: rgba(31, 26, 20, .88);
+    color: var(--gold-hell) !important;
+    font-size: 1.8rem !important;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity .25s, background .25s;
+}
+
+.blaettern:hover {
+    background: var(--sepia);
+}
+
+.blaettern:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.blaettern.zurueck {
+    left: 1rem;
+}
+
+.blaettern.vor {
+    right: 1rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .blaettern {
+        display: block;
+    }
+}
+
+/* ── Mobil ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+    #strasse.strasse {
+        --bild-b: 116px;
+        --bild-h: 146px;
+        --karte-b: 136px;
+    }
+
+    .kopf {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: .55rem 1rem;
+    }
+
+    .kopf-titel,
+    .richtung {
+        display: none;
+    }
+
+    /* Abmelden mobil: klein rechts neben dem Wegweiser, der dafür Platz lässt. */
+    .kopf {
+        position: relative;
+        padding-right: 6.4rem;
+    }
+
+    .kopf-rechts {
+        position: absolute;
+        top: 50%;
+        right: .75rem;
+        transform: translateY(-50%);
+    }
+
+    .kopf-rechts form.abmelden button {
+        min-height: 32px;
+        padding: .15rem .5rem;
+        font-size: .72rem;
+    }
+
+    .kopf-links:has(.heimweg[hidden]) {
+        display: none;
+    }
+
+    .kopf-links {
+        align-items: center;
+    }
+
+    .wegweiser {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .bahn {
+        padding: 0 6vw;
+        scroll-snap-type: x mandatory;
+        background: none;
+    }
+
+    .station {
+        width: 88vw;
+        padding: 1.25rem .35rem 2rem;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+
+    .station-raster {
+        grid-template-areas:
+            'fenster'
+            'gabel'
+            'gasse';
+        grid-template-columns: 1fr;
+    }
+
+    .fenster {
+        padding: 0 .6rem 1rem;
+    }
+
+    .schild {
+        margin: 0 -.6rem .9rem;
+    }
+
+    .karte {
+        padding-inline: 0;
+    }
+
+    .karte .name {
+        font-size: .96rem;
+    }
+
+    .lebensdaten,
+    .beziehung {
+        font-size: .8rem;
+    }
+
+    .gabelung {
+        flex-direction: row;
+        gap: .5rem;
+        margin: 1.1rem 7px 0;
+        padding: 0;
+    }
+
+    .gabelung::before {
+        display: none;
+    }
+
+    .gabel {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 52px;
+        padding: .4rem 1.4rem .4rem .6rem;
+        gap: .45rem;
+        clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+    }
+
+    .gabel-name {
+        overflow: hidden;
+        font-size: .95rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .gabel-text {
+        min-width: 0;
+    }
+
+    .gasse {
+        margin-top: .8rem;
+    }
+
+    .gasse-liste {
+        grid-template-columns: 1fr;
+    }
+
+    .station-laden {
+        width: 88vw;
+    }
+
+    .endschild {
+        width: auto;
+        margin: 6rem .5rem 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #strasse.strasse {
+        --dauer: 0ms;
+    }
+
+    .station,
+    .gabel,
+    .bild,
+    .gasse-koerper {
+        transition: none;
+    }
+
+    .station.kommt {
+        opacity: 1;
+        transform: none;
+    }
+
+    .laterne,
+    .scheibe.wechsel {
+        animation: none;
+    }
+}
+
+/* Abmelden im Endschild (Hinweis bei fehlendem Zugang) */
+.endschild form.abmelden {
+    margin-top: 1rem;
+}

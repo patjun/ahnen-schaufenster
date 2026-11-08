@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var string $fehler    Meldung (leer = keine)
+ * @var string $hinweis   ruhiger Hinweis, z. B. nach dem Abmelden (leer = keiner)
+ * @var string $vergessen webtrees-Seite „Neues Passwort anfordern“
+ * @var string $username  zuletzt eingegebener Benutzername
+ * @var string $action    Ziel des Formulars
+ */
+?>
+<main class="anmeldung">
+    <h1>Ahnen-Schaufenster</h1>
+    <p class="untertitel">Ein Bummel durch die Vorfahren</p>
+
+    <?php if ($hinweis !== '') : ?>
+        <p class="hinweis" role="status"><?= e($hinweis) ?></p>
+    <?php endif ?>
+
+    <?php if ($fehler !== '') : ?>
+        <p class="meldung" role="alert"><?= e($fehler) ?></p>
+    <?php endif ?>
+
+    <form method="post" action="<?= e($action) ?>">
+        <?= csrf_field() ?>
+
+        <label for="username">Benutzername</label>
+        <input type="text" id="username" name="username" value="<?= e($username) ?>" autocomplete="username" autocapitalize="none" required autofocus>
+
+        <label for="password">Passwort</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+        <button type="submit">Anmelden</button>
+    </form>
+
+    <p class="vergessen"><a href="<?= e($vergessen) ?>">Passwort vergessen?</a></p>
+</main>

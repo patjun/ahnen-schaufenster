@@ -1,0 +1,18 @@
+{
+    "name": "jungbluth/ahnen-schaufenster",
+    "description": "webtrees-Modul: Ahnen-Schaufenster",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "require-dev": {
+        "phpunit/phpunit": "^11"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jungbluth\\AhnenSchaufenster\\": "src/",
+            "Jungbluth\\AhnenSchaufenster\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

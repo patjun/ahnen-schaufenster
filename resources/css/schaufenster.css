@@ -1,0 +1,179 @@
+/* Ahnen-Schaufenster: Grundfarben und Schrift. Keine externen Schriften oder CDNs. */
+:root {
+    --grund: #1f1a14;
+    --gold: #c8a96a;
+    --gold-hell: #e7c27a;
+    --sepia: #5a4a38;
+    --text: #f3e9d8;
+    --gedaempft: #a89878;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body.schaufenster {
+    background: var(--grund);
+    color: var(--text);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.schaufenster h1 {
+    margin: 0 0 .25rem;
+    color: var(--gold-hell);
+    font-weight: normal;
+    letter-spacing: .04em;
+}
+
+.schaufenster .untertitel {
+    margin: 0 0 2rem;
+    color: var(--gedaempft);
+    font-style: italic;
+}
+
+.schaufenster .meldung {
+    margin: 0 0 1.5rem;
+    padding: .6rem .9rem;
+    border: 1px solid var(--gold);
+    border-left-width: 4px;
+    background: rgba(200, 169, 106, .08);
+}
+
+/* Anmeldeseite */
+.anmeldung {
+    max-width: 24rem;
+    margin: 0 auto;
+    padding: 12vh 1.25rem 3rem;
+}
+
+.anmeldung form {
+    display: flex;
+    flex-direction: column;
+}
+
+.anmeldung label {
+    margin-top: 1rem;
+    color: var(--gedaempft);
+    font-size: .9rem;
+}
+
+.anmeldung input {
+    margin-top: .25rem;
+    padding: .6rem .7rem;
+    border: 1px solid var(--sepia);
+    border-radius: 2px;
+    background: rgba(243, 233, 216, .06);
+    color: var(--text);
+    font: inherit;
+}
+
+.anmeldung input:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+}
+
+.anmeldung button {
+    margin-top: 1.75rem;
+    padding: .7rem 1rem;
+    border: 1px solid var(--gold-hell);
+    border-radius: 2px;
+    background: var(--sepia);
+    color: var(--gold-hell);
+    font: inherit;
+    letter-spacing: .05em;
+    cursor: pointer;
+}
+
+.anmeldung button:hover,
+.anmeldung button:focus-visible {
+    background: var(--gold);
+    color: var(--grund);
+}
+
+/* Ruhiger Hinweis (z. B. nach dem Abmelden) */
+.schaufenster .hinweis {
+    margin: 0 0 1.5rem;
+    color: var(--gedaempft);
+    font-style: italic;
+}
+
+.anmeldung .vergessen {
+    margin: 1.25rem 0 0;
+    font-size: .9rem;
+    text-align: center;
+}
+
+.anmeldung .vergessen a {
+    color: var(--gedaempft);
+    text-underline-offset: .2em;
+}
+
+.anmeldung .vergessen a:hover,
+.anmeldung .vergessen a:focus-visible {
+    color: var(--gold-hell);
+}
+
+/* Abmelden: kleiner, zurückhaltender Knopf (Kopf der Straße, Hinweisseiten, Hinweise im Lebensweg) */
+form.abmelden {
+    margin: 0;
+}
+
+form.abmelden button {
+    min-height: 36px;
+    padding: .2rem .8rem;
+    border: 1px solid rgba(168, 152, 120, .5);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--gedaempft);
+    font: inherit;
+    font-size: .8rem;
+    font-style: normal;
+    letter-spacing: .06em;
+    cursor: pointer;
+}
+
+form.abmelden button:hover,
+form.abmelden button:focus-visible {
+    border-color: var(--gold);
+    color: var(--gold-hell);
+}
+
+form.abmelden button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+/* Hinweisseiten der Straße (kein Zugang, keine sichtbare Person) */
+.hinweisseite {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 12vh 0 3rem;
+}
+
+.hinweisseite h1 {
+    margin-bottom: 1.5rem;
+}
+
+/* Straße (Hülle) */
+#strasse {
+    min-height: 100vh;
+    padding: 2rem 1.25rem;
+}
+
+@media (max-width: 760px) {
+    body.schaufenster {
+        font-size: 17px;
+    }
+
+    .anmeldung {
+        padding-top: 8vh;
+    }
+}

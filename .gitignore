@@ -1,0 +1,5 @@
+/vendor/
+.phpunit.result.cache
+ahnen-schaufenster*.zip
+node_modules/
+tests/smoke/baum.sh
