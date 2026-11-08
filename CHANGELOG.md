@@ -16,7 +16,10 @@ Erste Fassung.
   weitere Ehen als zusätzliche Scheiben, Kennzeichnung „direkte Linie“ und Verwandtschaft zum angemeldeten Benutzer.
 - Lebensweg: Diaschau nach Datum mit eigenen und Verwandten-Ereignissen, Bildern, Dokumenten, Notizen und Quellen;
   Karte mit den Wohn- und Ereignisorten (daneben, mobil darunter).
+- Bild im Fenster nur von Medien des Typs Foto oder Gemälde, die direkt an der Person hängen; sonst ein Scherenschnitt-Profil (Mann nach rechts, Frau mit Haarknoten nach links, sodass Paare einander ansehen; unbekannt blasser).
 - Datenschutz über die Regeln von webtrees; verborgene Personen erscheinen ohne Namen, Daten und Bild.
+- Kontraste nach WCAG 2.2 AA: Texte mindestens 5,8:1, Bedienelemente mindestens 3:1, auch die nicht gewählte Linie.
+- Tastatur: Straße und Lebensweg vollständig per Tab, Enter, Pfeiltasten und Escape bedienbar; Dia-Punkte als eine Gruppe (ein Tab-Halt), Kartenpunkte benannt und per Enter wählbar.
 - Abmelden, „Passwort vergessen?“, deutsche Oberfläche unabhängig von der Kontosprache.
 
 [Unveröffentlicht]: https://github.com/patjun/ahnen-schaufenster/compare/v0.1.0...HEAD

@@ -5,7 +5,7 @@
     --gold-hell: #e7c27a;
     --sepia: #5a4a38;
     --text: #f3e9d8;
-    --gedaempft: #a89878;
+    --gedaempft: #bcad8f;  /* ≥ 5,5:1 auf den Fensterflächen (WCAG AA mit Reserve) */
 }
 
 * {
@@ -129,7 +129,7 @@ form.abmelden {
 form.abmelden button {
     min-height: 36px;
     padding: .2rem .8rem;
-    border: 1px solid rgba(168, 152, 120, .5);
+    border: 1px solid var(--gedaempft);
     border-radius: 3px;
     background: transparent;
     color: var(--gedaempft);

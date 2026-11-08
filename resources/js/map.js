@@ -208,6 +208,28 @@ export function createRouteMap(el, route, options = {}) {
                 marker.bindTooltip(tooltip, { direction: 'top', offset: [0, -6], className: 'karte-hinweis' });
             }
             marker.on('click', () => options.onSelect?.(point.slideId));
+            // Tastatur und Screenreader: Leaflet macht den Punkt fokussierbar, gibt ihm aber keinen Namen.
+            // Das SVG-Element entsteht erst, wenn die Karte zeichnet; deshalb erst dann beschriften.
+            const label = () => {
+                const node = marker.getElement?.();
+                if (!node || node.dataset.beschriftet) {
+                    return;
+                }
+                node.dataset.beschriftet = '1';
+                node.setAttribute('tabindex', '0');
+                node.setAttribute('role', 'button');
+                node.setAttribute('aria-label', `${point.place || 'Ort'}: zugehöriges Dia zeigen`);
+                node.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        options.onSelect?.(point.slideId);
+                    }
+                });
+            };
+            label();
+            marker.on('add', label);
+            map.whenReady(() => requestAnimationFrame(label));
+            map.on('zoomend moveend', label);
             markers.push(marker);
         });
 

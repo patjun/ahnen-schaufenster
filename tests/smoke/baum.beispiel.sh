@@ -41,3 +41,5 @@ EHE_PERSON_NOTIZ="Text"     # Teil der eigenen Notiz der Person
 EHE_KIND_LEBEND=I9          # Kind dieser Ehe ohne Daten (gilt als lebend, für test-pfad verborgen)
 DATEINAMEN_PERSON=I10       # Person mit Medien, deren Titel ein Dateiname ist
 DATEINAMEN_MUSTER="_"       # Teil dieses Dateinamens
+FOTO_PERSON=I11             # Vater des Vaters: hat ein Bild vom Typ Foto/Gemälde direkt an der Person
+SCAN_PERSON=I12             # Mutter: hat nur Bilder anderer Typen oder ohne Typ (Scans) -> Silhouette

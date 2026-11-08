@@ -832,7 +832,7 @@ button.person-verweis .person-name {
     border: 1.5px solid var(--gold);
     border-radius: 50%;
     background: var(--gold);
-    opacity: .55;
+    opacity: .8;
     transform: translate(-50%, -50%);
     transition: transform .2s, opacity .2s, background-color .2s;
 }
@@ -881,14 +881,15 @@ button.person-verweis .person-name {
     filter: sepia(.55) saturate(.75) brightness(.8) contrast(1.05);
 }
 
-.leben-karte .leaflet-control-attribution {
-    background: rgba(31, 26, 20, .78);
+/* Spezifischer als Leaflets eigene Regel (.leaflet-container .leaflet-control-attribution, weißer Grund). */
+.leben-karte .leaflet-control-container .leaflet-control-attribution {
+    background: rgba(31, 26, 20, .92);
     color: var(--gedaempft);
     font-size: .7rem;
 }
 
-.leben-karte .leaflet-control-attribution a {
-    color: var(--gold);
+.leben-karte .leaflet-control-container .leaflet-control-attribution a {
+    color: var(--gold-hell);
 }
 
 .leben-karte .leaflet-bar a {
