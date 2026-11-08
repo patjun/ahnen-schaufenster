@@ -1,0 +1,1129 @@
+/* Der Lebensweg: Vollansicht über der Straße mit Diaschau (Fotoalbum) und Karte. Farben aus schaufenster.css. */
+
+body.leben-offen {
+    overflow: hidden;
+}
+
+.leben {
+    --holz: #3a2f24;
+    --scheibe: #2a2219;
+    --papier: #2d251c;
+    --creme: #efe4cf;
+
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    color: var(--text);
+}
+
+.leben button {
+    font: inherit;
+    color: inherit;
+}
+
+.leben button:focus-visible,
+.leben a:focus-visible,
+.leben summary:focus-visible {
+    outline: 2px solid var(--gold-hell);
+    outline-offset: 3px;
+}
+
+.leben-schleier {
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 11, 8, .84);
+    backdrop-filter: blur(3px);
+}
+
+/* ── Das Blatt ──────────────────────────────────────────────────────────── */
+
+.leben-blatt {
+    position: absolute;
+    inset: 3vh max(2.5vw, calc((100vw - 1440px) / 2));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--sepia);
+    border-radius: 6px;
+    background:
+        linear-gradient(165deg, rgba(243, 233, 216, .06) 0%, rgba(243, 233, 216, 0) 35%),
+        var(--grund);
+    box-shadow:
+        0 0 0 6px var(--holz),
+        0 0 0 7px rgba(200, 169, 106, .3),
+        0 30px 70px rgba(0, 0, 0, .6);
+    will-change: transform;
+}
+
+.leben-leiste {
+    position: absolute;
+    top: .7rem;
+    right: .8rem;
+    left: .8rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    pointer-events: none;
+}
+
+.leben-leiste > * {
+    pointer-events: auto;
+}
+
+.leben-leiste-raum {
+    flex: 1;
+    pointer-events: none;
+}
+
+.leben-griff {
+    display: none;
+}
+
+.leben-schliessen {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(200, 169, 106, .55);
+    border-radius: 50%;
+    background: rgba(31, 26, 20, .85);
+    color: var(--gold-hell) !important;
+    font-size: 1.7rem !important;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.leben-schliessen:hover {
+    background: rgba(200, 169, 106, .18);
+}
+
+.weiterbummeln,
+.leben-knopf {
+    min-height: 46px;
+    padding: .45rem 1.1rem;
+    border: 0;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--gold-hell), var(--gold));
+    color: var(--grund) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.weiterbummeln:hover,
+.leben-knopf:hover {
+    filter: brightness(1.06);
+}
+
+.leben-knopf.klein {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    font-size: .85rem;
+}
+
+.leben-zurueck {
+    min-height: 46px;
+    padding: .4rem .9rem;
+    border: 1px solid rgba(200, 169, 106, .45);
+    border-radius: 3px;
+    background: rgba(31, 26, 20, .85);
+    color: var(--gold) !important;
+    cursor: pointer;
+}
+
+.leben-zurueck:hover {
+    border-color: var(--gold);
+}
+
+.leben-inhalt {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* ── Kopf: wer ist das? ─────────────────────────────────────────────────── */
+
+.leben-kopf {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.5rem .9rem;
+    padding-right: 22rem;
+    border-bottom: 1px solid rgba(200, 169, 106, .25);
+    background: linear-gradient(180deg, #30271d, rgba(42, 34, 25, .4));
+}
+
+/* Nach einer Verlinkung steht „Zurück zu …“ oben links: Platz darüber lassen. */
+.leben-blatt:has(.leben-zurueck:not([hidden])) .leben-kopf {
+    padding-top: 3.9rem;
+}
+
+.leben-bild {
+    --bild-b: 92px;
+    --bild-h: 115px;
+
+    flex: none;
+    width: var(--bild-b);
+    height: var(--bild-h);
+    padding: 3px;
+    border: 3px solid var(--gedaempft);
+    border-radius: 2px;
+    background: var(--holz);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .4);
+}
+
+button.leben-bild {
+    cursor: zoom-in;
+}
+
+.leben-bild img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.leben-kopf.mit-foto .leben-bild img {
+    filter: sepia(.12) saturate(.92);
+}
+
+.leben-kopf.direkt .leben-bild {
+    border-color: var(--gold-hell);
+    box-shadow: 0 0 0 1px rgba(231, 194, 122, .25), 0 0 18px rgba(231, 194, 122, .22), 0 6px 14px rgba(0, 0, 0, .4);
+}
+
+.leben-person {
+    min-width: 0;
+}
+
+.leben-person p {
+    margin: 0;
+}
+
+.leben-ueber {
+    color: var(--gedaempft);
+    font-size: .68rem;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+}
+
+.leben-name {
+    margin: .05rem 0 .2rem;
+    color: var(--gold-hell);
+    font-size: 1.65rem;
+    font-weight: normal;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+.leben-kopf .lebensdaten {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.2rem;
+    color: #dccfb6;
+    font-size: .9rem;
+}
+
+.leben-bezug {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: .9rem;
+    margin-top: .15rem !important;
+}
+
+.leben-bezug .beziehung {
+    color: var(--gedaempft);
+    font-size: .92rem;
+    font-style: italic;
+}
+
+.leben .direkt-zeichen {
+    color: var(--gold-hell);
+    font-size: .74rem;
+    letter-spacing: .1em;
+    white-space: nowrap;
+}
+
+/* ── Raster: Diaschau | Karte ───────────────────────────────────────────── */
+
+.leben-raster {
+    display: grid;
+    flex: 1;
+    grid-template-columns: 3fr 2fr;
+    gap: 1.25rem;
+    min-height: 0;
+    padding: 1.1rem 1.25rem 1.1rem;
+}
+
+.leben-raster.ohne-karte {
+    grid-template-columns: minmax(0, 54rem);
+    justify-content: center;
+}
+
+.leben-raster.ohne-karte .leben-karte {
+    display: none;
+}
+
+/* Kurzer Lebensweg ohne Karte: kompaktes Album mittig statt einer leeren, bildschirmhohen Seite. */
+.leben-raster.ohne-karte .diaschau {
+    justify-content: center;
+}
+
+.leben-raster.ohne-karte .dia-buehne {
+    flex: 0 1 auto;
+}
+
+.leben-raster.ohne-karte .dia {
+    min-height: 24rem;
+}
+
+.diaschau {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+}
+
+.dia-buehne {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: var(--sepia) transparent;
+    scrollbar-width: thin;
+}
+
+/* ── Ein Dia: Seite im Fotoalbum ────────────────────────────────────────── */
+
+.dia {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    min-height: 100%;
+    padding: 1.5rem 1.9rem 1.6rem;
+    border: 1px solid rgba(200, 169, 106, .35);
+    border-radius: 4px;
+    background:
+        radial-gradient(ellipse 90% 70% at 30% 0%, rgba(243, 233, 216, .06), rgba(243, 233, 216, 0) 70%),
+        var(--papier);
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, .25);
+}
+
+.dia > * {
+    margin: 0;
+}
+
+.dia {
+    position: relative;
+}
+
+.dia > * {
+    position: relative;
+}
+
+/* Großes, blasses Zierzeichen in der Ecke der Albumseite (✻ Geburt, ⚭ Heirat, † Tod) */
+.dia > .dia-zier {
+    position: absolute;
+    right: 1.4rem;
+    bottom: .2rem;
+    color: var(--gold);
+    font-size: 9rem;
+    line-height: 1;
+    opacity: .06;
+    pointer-events: none;
+}
+
+.dia.kommt-vor {
+    animation: dia-vor 320ms ease-out;
+}
+
+.dia.kommt-zurueck {
+    animation: dia-zurueck 320ms ease-out;
+}
+
+@keyframes dia-vor {
+    from {
+        opacity: 0;
+        transform: translateX(26px);
+    }
+}
+
+@keyframes dia-zurueck {
+    from {
+        opacity: 0;
+        transform: translateX(-26px);
+    }
+}
+
+.dia-kopf {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: .9rem;
+    row-gap: .1rem;
+    padding-bottom: .65rem;
+    border-bottom: 1px solid rgba(200, 169, 106, .22);
+}
+
+.dia-kopf > * {
+    margin: 0;
+}
+
+.dia-datum {
+    flex-basis: 100%;
+    color: var(--gold-hell);
+    font-size: 1.7rem;
+    line-height: 1.15;
+}
+
+.dia-datum.ohne {
+    color: var(--gedaempft);
+    font-size: .8rem !important;
+    font-style: italic;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.dia-titel {
+    color: var(--text);
+    font-size: 1.3rem;
+    font-weight: normal;
+    letter-spacing: .02em;
+}
+
+.familie-zusatz {
+    padding: .05rem .6rem;
+    border: 1px solid var(--sepia);
+    border-radius: 999px;
+    color: var(--gedaempft);
+    font-size: .74rem;
+    font-style: italic;
+}
+
+.dia-wert {
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+.dia-ort {
+    display: flex;
+    gap: .5rem;
+    color: #dccfb6;
+    font-size: .98rem;
+}
+
+.dia-ort-zeichen {
+    color: var(--gold);
+}
+
+/* Ereignisse in der Familie: etwas zurückgenommen. */
+.dia.familie {
+    border-style: dashed;
+    border-color: rgba(168, 152, 120, .35);
+    background: rgba(42, 34, 25, .55);
+    box-shadow: none;
+}
+
+.dia.familie .dia-datum {
+    color: var(--gold);
+    font-size: 1.4rem;
+}
+
+.dia.familie .dia-titel {
+    color: #dccfb6;
+    font-size: 1.15rem;
+}
+
+/* Dias ohne Bild: Inhalt mittig auf der Albumseite, Datum größer. */
+.dia:not(:has(.dia-medien)) > .dia-kopf {
+    margin-top: auto;
+}
+
+.dia:not(:has(.dia-medien)) > :last-child {
+    margin-bottom: auto;
+}
+
+.dia:not(:has(.dia-medien)):not(.familie) .dia-datum {
+    font-size: 2.2rem;
+}
+
+.dia-leer > p {
+    margin: auto 0 !important;
+}
+
+.dia-leer {
+    justify-content: center;
+    color: var(--gedaempft);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Fotos: großes Bild mit cremefarbenem Rand und Fotoecken */
+.dia-medien {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.foto {
+    margin: .3rem 0 0;
+    text-align: center;
+}
+
+.foto-gross {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    padding: 9px 9px 9px;
+    border: 0;
+    background: var(--creme);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .5);
+    cursor: zoom-in;
+    transform: rotate(-.6deg);
+    transition: transform .25s ease;
+}
+
+.foto-gross:hover {
+    transform: rotate(0) scale(1.01);
+}
+
+.foto-gross::before,
+.foto-gross::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #1b1611;
+}
+
+.foto-gross::before {
+    top: -4px;
+    left: -4px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.foto-gross::after {
+    right: -4px;
+    bottom: -4px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.foto-gross img {
+    display: block;
+    max-width: 100%;
+    max-height: 44vh;
+    min-height: 120px;
+    object-fit: contain;
+    filter: sepia(.1) saturate(.92);
+}
+
+.foto figcaption {
+    margin-top: .7rem;
+    color: var(--gedaempft);
+    font-size: .86rem;
+    font-style: italic;
+}
+
+.foto-leiste {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.foto-klein {
+    width: 64px;
+    height: 64px;
+    padding: 3px;
+    border: 2px solid var(--sepia);
+    background: var(--holz);
+    cursor: pointer;
+    opacity: .7;
+}
+
+.foto-klein[aria-pressed='true'],
+.foto-klein:hover {
+    border-color: var(--gold-hell);
+    opacity: 1;
+}
+
+.foto-klein img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Dokumente (PDF) und externe Verweise */
+.dokument,
+.extern {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 64px;
+    padding: .75rem 1rem;
+    border: 1px solid rgba(200, 169, 106, .4);
+    border-radius: 4px;
+    background: rgba(31, 26, 20, .55);
+    color: var(--text);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color .2s, background-color .2s;
+}
+
+.dokument:hover,
+.extern:hover {
+    border-color: var(--gold-hell);
+    background: rgba(200, 169, 106, .08);
+}
+
+.dokument-blatt {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: flex-end;
+    justify-content: center;
+    width: 52px;
+    height: 66px;
+    padding-bottom: 8px;
+    background:
+        repeating-linear-gradient(180deg, transparent 0 9px, rgba(90, 74, 56, .35) 9px 10px) 8px 14px / 34px 34px no-repeat,
+        var(--creme);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .45);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+    transform: rotate(-2deg);
+}
+
+.dokument-blatt span {
+    padding: 0 .3rem;
+    background: #8c3b2a;
+    color: var(--creme);
+    font-family: system-ui, sans-serif;
+    font-size: .62rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+}
+
+.dokument-text,
+.extern {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.dokument-titel,
+.extern-titel {
+    overflow-wrap: anywhere;
+}
+
+.dokument-aktion,
+.extern-aktion {
+    margin-top: .15rem;
+    color: var(--gold-hell);
+    font-size: .88rem;
+}
+
+/* Genannte Personen */
+.dia-personen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.person-verweis {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 48px;
+    padding: .45rem .85rem .5rem;
+    border: 1px solid var(--gedaempft);
+    border-left-width: 3px;
+    border-radius: 3px;
+    background: rgba(31, 26, 20, .6);
+    text-align: left;
+}
+
+button.person-verweis {
+    cursor: pointer;
+    transition: background-color .2s, transform .2s;
+}
+
+button.person-verweis:hover {
+    background: rgba(200, 169, 106, .1);
+    transform: translateY(-1px);
+}
+
+.person-verweis.direkt {
+    border-color: var(--gold-hell);
+}
+
+.person-name {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+button.person-verweis .person-name {
+    text-decoration: underline;
+    text-decoration-color: rgba(231, 194, 122, .45);
+    text-underline-offset: 3px;
+}
+
+.person-bezug {
+    color: var(--gedaempft);
+    font-size: .84rem;
+    font-style: italic;
+}
+
+/* Notizen als kleine Geschichten */
+.dia-notizen p {
+    margin: 0 0 .6rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--sepia);
+    color: #e6dbc6;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.dia-quellen {
+    padding-top: .4rem;
+    color: var(--gedaempft);
+    font-size: .86rem;
+}
+
+.dia-quellen summary {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    min-height: 40px;
+    color: var(--gold);
+    cursor: pointer;
+    list-style: none;
+}
+
+.dia-quellen summary::-webkit-details-marker {
+    display: none;
+}
+
+.dia-quellen summary::before {
+    content: '▸';
+    font-size: .8rem;
+    transition: transform .2s;
+}
+
+.dia-quellen[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.dia-quellen ul {
+    margin: .2rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.dia-quellen li {
+    margin-bottom: .3rem;
+}
+
+/* Desktop: Bild rechts auf der Albumseite, Text fließt links daran vorbei. */
+@media (min-width: 761px) {
+    .dia:has(.dia-medien) {
+        display: block;
+    }
+
+    .dia:has(.dia-medien) > * + * {
+        margin-top: .75rem;
+    }
+
+    .dia:has(.dia-medien)::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .dia-medien {
+        float: right;
+        width: min(54%, 32rem);
+        margin: .4rem 0 1rem 1.75rem !important;
+    }
+}
+
+/* ── Fuß: Pfeile und Punktleiste ────────────────────────────────────────── */
+
+.dia-fuss {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: .8rem;
+    padding-top: .8rem;
+}
+
+.dia-pfeil {
+    flex: none;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(200, 169, 106, .6);
+    border-radius: 50%;
+    background: rgba(31, 26, 20, .7);
+    color: var(--gold-hell) !important;
+    font-size: 1.8rem !important;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color .2s, opacity .2s;
+}
+
+.dia-pfeil:hover:not(:disabled) {
+    background: rgba(200, 169, 106, .18);
+}
+
+.dia-pfeil:disabled {
+    opacity: .25;
+    cursor: default;
+}
+
+.dia-mitte {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    min-width: 0;
+}
+
+.dia-zahl {
+    color: var(--gedaempft);
+    font-size: .85rem;
+}
+
+.dia-punkte {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.dia-punkt {
+    position: relative;
+    width: 24px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.dia-punkt::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: .55;
+    transform: translate(-50%, -50%);
+    transition: transform .2s, opacity .2s, background-color .2s;
+}
+
+.dia-punkt.familie::before {
+    background: transparent;
+}
+
+.dia-punkt:hover::before {
+    opacity: 1;
+}
+
+.dia-punkt[aria-current]::before {
+    border-color: var(--gold-hell);
+    background: var(--gold-hell);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.45);
+}
+
+.dia-punkte-trenner {
+    width: 1px;
+    height: 14px;
+    margin: 0 .35rem;
+    background: var(--sepia);
+}
+
+/* ── Karte ──────────────────────────────────────────────────────────────── */
+
+.leben-karte {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--sepia);
+    border-radius: 4px;
+    background: #2a2219;
+    box-shadow: 0 0 0 4px var(--holz), 0 12px 30px rgba(0, 0, 0, .45);
+}
+
+.leben-karte.leaflet-container {
+    font: inherit;
+    background: #2a2219;
+}
+
+/* Kacheln wie ein vergilbter Atlas */
+.leben-karte .leaflet-tile-pane {
+    filter: sepia(.55) saturate(.75) brightness(.8) contrast(1.05);
+}
+
+.leben-karte .leaflet-control-attribution {
+    background: rgba(31, 26, 20, .78);
+    color: var(--gedaempft);
+    font-size: .7rem;
+}
+
+.leben-karte .leaflet-control-attribution a {
+    color: var(--gold);
+}
+
+.leben-karte .leaflet-bar a {
+    border-color: var(--sepia);
+    background: rgba(31, 26, 20, .9);
+    color: var(--gold-hell);
+}
+
+.leben-karte .leaflet-bar a:hover {
+    background: #3a2f24;
+}
+
+.leben-karte .karte-punkt {
+    cursor: pointer;
+    transition: r .2s;
+}
+
+.leben-karte .karte-jetzt {
+    filter: drop-shadow(0 0 6px rgba(231, 194, 122, .9));
+}
+
+.karte-hinweis.leaflet-tooltip {
+    border: 1px solid var(--sepia);
+    background: #2a2219;
+    color: var(--text);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: .82rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
+}
+
+.karte-hinweis.leaflet-tooltip-top::before {
+    border-top-color: var(--sepia);
+}
+
+/* ── Meldungen ──────────────────────────────────────────────────────────── */
+
+.leben-meldung {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    color: var(--gedaempft);
+    font-style: italic;
+    text-align: center;
+}
+
+.leben-meldung p {
+    margin: 0;
+}
+
+/* ── Betrachter (Bild groß, PDF) ────────────────────────────────────────── */
+
+.betrachter {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    background: rgba(12, 10, 7, .95);
+}
+
+.betrachter-leiste {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 1rem;
+    padding: .7rem 1rem;
+}
+
+.betrachter-titel {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    color: var(--gold-hell);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.betrachter-flaeche {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0 1rem 1rem;
+}
+
+.betrachter-pdf {
+    width: min(1100px, 100%);
+    height: 100%;
+    border: 0;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .6);
+}
+
+.betrachter-bild {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 10px;
+    background: var(--creme);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .6);
+    object-fit: contain;
+}
+
+/* ── Straße: gefundene Karte kurz hervorheben ───────────────────────────── */
+
+.karte.gefunden .bild {
+    animation: gefunden 1.6s ease-out;
+}
+
+@keyframes gefunden {
+    0%,
+    40% {
+        box-shadow: 0 0 0 4px rgba(231, 194, 122, .85), 0 0 34px rgba(231, 194, 122, .7);
+    }
+}
+
+/* ── Mobil: alles untereinander, ganze Fläche ───────────────────────────── */
+
+@media (max-width: 760px) {
+    .leben-blatt {
+        inset: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .leben-leiste {
+        top: .5rem;
+        right: .5rem;
+        left: .5rem;
+    }
+
+    .leben-griff {
+        position: absolute;
+        top: -.2rem;
+        left: 50%;
+        display: block;
+        width: 42px;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(168, 152, 120, .45);
+        transform: translateX(-50%);
+    }
+
+    .leben-inhalt {
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .leben-kopf {
+        align-items: flex-start;
+        gap: .9rem;
+        padding: 3.7rem 1rem .9rem;
+    }
+
+    .leben-bild {
+        --bild-b: 74px;
+        --bild-h: 92px;
+    }
+
+    .leben-name {
+        font-size: 1.3rem;
+    }
+
+    .leben-kopf .lebensdaten {
+        flex-direction: column;
+        font-size: .84rem;
+    }
+
+    .leben-raster,
+    .leben-raster.ohne-karte {
+        display: flex;
+        flex: none;
+        flex-direction: column;
+        gap: 1rem;
+        padding: .9rem .75rem 1.5rem;
+    }
+
+    .dia-buehne {
+        flex: none;
+        overflow: visible;
+    }
+
+    .dia {
+        min-height: 0;
+        padding: 1.1rem 1.05rem 1.2rem;
+    }
+
+    .dia-datum {
+        font-size: 1.4rem;
+    }
+
+    .dia.familie .dia-datum {
+        font-size: 1.2rem;
+    }
+
+    .dia-titel {
+        font-size: 1.15rem;
+    }
+
+    .foto-gross img {
+        max-height: 52vh;
+    }
+
+    .dia-fuss {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        margin: 0 -.75rem;
+        padding: .6rem .75rem .7rem;
+        background: linear-gradient(0deg, var(--grund) 75%, rgba(31, 26, 20, 0));
+    }
+
+    .leben-karte {
+        flex: none;
+        height: 40vh;
+        margin: 0 4px;
+    }
+
+    .betrachter-flaeche {
+        padding: 0 .5rem .5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dia.kommt-vor,
+    .dia.kommt-zurueck,
+    .karte.gefunden .bild {
+        animation: none;
+    }
+}

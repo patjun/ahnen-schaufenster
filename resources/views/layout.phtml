@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Eigenes HTML-Gerüst des Ahnen-Schaufensters (bewusst nicht das webtrees-Layout).
+ *
+ * @var string               $title
+ * @var list<string>         $css_urls
+ * @var array<string,string> $import_map  Modulname → URL (leer = keine Import-Map)
+ * @var string               $script_url  Einstiegsskript als ES-Modul ('' = keins)
+ * @var string               $content     bereits gerendertes HTML der jeweiligen Seite
+ */
+?>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#1f1a14">
+    <title><?= e($title) ?></title>
+    <?php foreach ($css_urls as $css_url) : ?>
+        <link rel="stylesheet" href="<?= e($css_url) ?>">
+    <?php endforeach ?>
+    <?php if ($import_map !== []) : ?>
+        <script type="importmap"><?= json_encode(['imports' => $import_map], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR) ?></script>
+    <?php endif ?>
+    <?php if ($script_url !== '') : ?>
+        <script type="module" src="<?= e($script_url) ?>"></script>
+    <?php endif ?>
+</head>
+<body class="schaufenster">
+<?= $content ?>
+</body>
+</html>

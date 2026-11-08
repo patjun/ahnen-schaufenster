@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Die Straße. street.js baut darin die Fenster auf; ohne Startkarte bleibt nur der Hinweis.
+ *
+ * @var string                    $start        XREF der Startperson ('' = keine sichtbare Person)
+ * @var string                    $tree         Baumname
+ * @var string                    $hinweis      Meldung für den Besucher (leer = keine)
+ * @var array<string,mixed>|null  $card         Karte der Startperson (PersonCard)
+ * @var string                    $api          Station-API mit Platzhalter für die XREF
+ * @var string                    $leben        Lebensweg-API mit Platzhalter für die XREF
+ * @var array<string,string>      $leaflet      Leaflet-Assets (js, css), lädt map.js bei Bedarf
+ * @var string                    $login        Schaufenster-Anmeldeseite
+ * @var string                    $abmelden     Logout-Route von webtrees (POST)
+ * @var array<string,string>      $silhouetten  Silhouetten-URLs nach Geschlecht (M, F, U)
+ */
+
+$json = static fn (mixed $value): string => json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+?>
+<div id="strasse"
+     data-start="<?= e($start) ?>"
+     data-tree="<?= e($tree) ?>"
+    <?php if ($card !== null) : ?>
+     data-start-card="<?= e($json($card)) ?>"
+     data-api="<?= e($api) ?>"
+     data-leben="<?= e($leben) ?>"
+     data-leaflet="<?= e($json($leaflet)) ?>"
+     data-login="<?= e($login) ?>"
+     data-abmelden="<?= e($abmelden) ?>"
+     data-silhouetten="<?= e($json($silhouetten)) ?>"
+    <?php endif ?>
+>
+    <?php if ($hinweis !== '') : ?>
+        <main class="hinweisseite">
+            <h1>Ahnen-Schaufenster</h1>
+            <p class="meldung"><?= e($hinweis) ?></p>
+            <form class="abmelden" method="post" action="<?= e($abmelden) ?>" data-login="<?= e($login) ?>">
+                <button type="submit">Abmelden</button>
+            </form>
+        </main>
+    <?php else : ?>
+        <noscript><p class="meldung">Das Schaufenster braucht JavaScript.</p></noscript>
+    <?php endif ?>
+</div>
