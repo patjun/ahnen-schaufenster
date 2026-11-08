@@ -64,6 +64,21 @@ else
 fi
 
 mutter="$(jqr "$p_patrick" '.station.mother.xref')"
+echo "== test-patrick: Bilder im Fenster nur Foto/Gemälde direkt an der Person =="
+vater="$(jqr "$p_patrick" '.station.father.xref')"
+p_vater="$(station "$vater")"
+assert_eq "$(jqr "$p_vater" '.station.father.xref')" "$FOTO_PERSON" "Vater des Vaters ist FOTO_PERSON"
+assert_contains "$(jqr "$p_vater" '.station.father.image.thumb // ""')" "media-thumbnail" "FOTO_PERSON zeigt ihr Foto"
+assert_eq "$(jqr "$p_patrick" '.station.mother.xref')" "$SCAN_PERSON" "Mutter ist SCAN_PERSON"
+assert_eq "$(jqr "$p_patrick" '.station.mother.image')" "null" "SCAN_PERSON: nur Scans -> kein Bild (Silhouette)"
+# Jedes Bild in den geladenen Stationen stammt aus einem Medium vom Typ Foto oder Gemälde (lokale DB, nur lesend).
+bild_xrefs="$(for j in "$p_patrick" "$p_vater"; do printf '%s' "$j" | jq -r '.. | objects | select(has("thumb")) | .thumb' ; done | sed -n 's/.*[?&]xref=\([^&]*\).*/\1/p' | sort -u)"
+assert_eq "$([ -n "$bild_xrefs" ] && echo ja)" "ja" "Mindestens ein Bild in den Stationen"
+for m in $bild_xrefs; do
+    typ="$(mysql -uroot -proot -h127.0.0.1 PRIVAT__webtrees -N -e "select lower(source_media_type) from wt_media_file where m_id='${m}' and m_file=(select gedcom_id from wt_gedcom where gedcom_name='${TREE}') limit 1" 2>/dev/null)"
+    case "$typ" in photo|painting) assert_eq ok ok "Bild ${m}: Typ ${typ}";; *) assert_eq "$typ" "photo|painting" "Bild ${m}: Typ Foto oder Gemälde";; esac
+done
+
 echo "== test-patrick: Station ${mutter} (Mutter) =="
 p_mutter="$(station "$mutter")"
 assert_contains "$(jqr "$p_mutter" '.station.father.name')" "$MUTTER_NACHNAME" "Vater-Name der Mutter enthält ${MUTTER_NACHNAME}"

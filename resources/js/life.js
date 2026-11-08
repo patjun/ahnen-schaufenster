@@ -360,9 +360,15 @@ class LifeView {
         this.counter.textContent = `${target + 1} von ${this.order.length}`;
         this.prevButton.disabled = target === 0;
         this.nextButton.disabled = target === this.order.length - 1;
+        // Nur der aktuelle Punkt ist ein Tab-Halt; die Pfeiltasten wechseln das Dia, der Fokus wandert mit.
+        const dotHadFocus = document.activeElement?.classList?.contains('dia-punkt');
         this.dots.querySelectorAll('.dia-punkt').forEach((dot, i) => {
+            dot.tabIndex = i === target ? 0 : -1;
             if (i === target) {
                 dot.setAttribute('aria-current', 'step');
+                if (dotHadFocus) {
+                    dot.focus({ preventScroll: true });
+                }
             } else {
                 dot.removeAttribute('aria-current');
             }
@@ -604,8 +610,8 @@ class LifeView {
 
     /** Tab bleibt im Lebensweg (die Straße dahinter ist ohnehin gesperrt). */
     trapFocus(event) {
-        const focusable = [...this.sheet.querySelectorAll('button:not([disabled]):not([hidden]), a[href], summary, [tabindex="0"]')]
-            .filter((node) => node.offsetParent !== null);
+        const focusable = [...this.sheet.querySelectorAll('button:not([disabled]):not([hidden]), a[href], summary, [tabindex]')]
+            .filter((node) => node.tabIndex >= 0 && (node.offsetParent !== null || node instanceof SVGElement));
         if (focusable.length === 0) {
             return;
         }

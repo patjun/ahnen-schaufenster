@@ -1,23 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Silhouette einer Frau">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Scherenschnitt einer Frau">
   <defs>
-    <radialGradient id="g" cx="50%" cy="42%" r="60%">
-      <stop offset="0" stop-color="#6b5841"/>
-      <stop offset=".7" stop-color="#4a3c2d"/>
-      <stop offset="1" stop-color="#2e251b"/>
+    <radialGradient id="g" cx="50%" cy="42%" r="62%">
+      <stop offset="0" stop-color="#fdfbf6"/>
+      <stop offset=".75" stop-color="#f3ecdd"/>
+      <stop offset="1" stop-color="#dccdaf"/>
     </radialGradient>
     <clipPath id="o"><ellipse cx="60" cy="75" rx="46" ry="60"/></clipPath>
   </defs>
   <rect width="120" height="150" fill="#2a2219"/>
   <ellipse cx="60" cy="75" rx="46" ry="60" fill="url(#g)"/>
-  <g clip-path="url(#o)" fill="#211b14" fill-opacity=".9">
-    <path d="M41 70 C36 40 52 34 60 34 C68 34 84 40 79 70 C80 84 76 94 72 98 L48 98 C44 94 40 84 41 70 Z"/>
-    <ellipse cx="60" cy="63" rx="15" ry="19"/>
-    <path d="M53 78 h14 v12 h-14z"/>
-    <path d="M24 140 C24 112 36 98 52 94 C56 99 64 99 68 94 C84 98 96 112 96 140 Z"/>
+  <g clip-path="url(#o)" fill="#0d0b08">
+    <g transform="translate(120 0) scale(-1 1) translate(9 13) scale(1.0)"><ellipse cx="22.5" cy="70" rx="13.5" ry="12.5"/><path d="M38.00 88.00 C36.58 86.00 33.50 86.67 31.50 85.00 C29.50 83.33 28.00 81.83 26.00 78.00 C24.00 74.17 20.50 67.67 19.50 62.00 C18.50 56.33 18.58 49.83 20.00 44.00 C21.42 38.17 23.83 31.25 28.00 27.00 C32.17 22.75 39.33 19.83 45.00 18.50 C50.67 17.17 57.42 17.75 62.00 19.00 C66.58 20.25 70.00 23.00 72.50 26.00 C75.00 29.00 76.17 33.67 77.00 37.00 C77.83 40.33 77.40 43.83 77.50 46.00 C77.60 48.17 77.77 48.83 77.60 50.00 C77.43 51.17 76.17 51.73 76.50 53.00 C76.83 54.27 78.42 55.93 79.60 57.60 C80.78 59.27 83.20 61.70 83.60 63.00 C84.00 64.30 82.90 64.93 82.00 65.40 C81.10 65.87 78.53 65.30 78.20 65.80 C77.87 66.30 80.00 67.60 80.00 68.40 C80.00 69.20 78.27 69.80 78.20 70.60 C78.13 71.40 79.77 72.30 79.60 73.20 C79.43 74.10 77.40 74.80 77.20 76.00 C77.00 77.20 78.73 78.93 78.40 80.40 C78.07 81.87 76.83 83.77 75.20 84.80 C73.57 85.83 70.17 85.57 68.60 86.60 C67.03 87.63 66.20 89.10 65.80 91.00 C65.40 92.90 65.93 95.50 66.20 98.00 C66.47 100.50 66.77 103.17 67.40 106.00 C68.03 108.83 70.00 115.00 70.00 115.00 C70.00 115.00 41.00 107.00 41.00 107.00 C41.00 107.00 40.50 100.17 40.00 97.00 C39.50 93.83 39.42 90.00 38.00 88.00 Z"/></g>
   </g>
-  <ellipse cx="60" cy="75" rx="46" ry="60" fill="none" stroke="#a89878" stroke-width="2.5"/>
-  <ellipse cx="60" cy="75" rx="51" ry="65" fill="none" stroke="#5a4a38" stroke-width="1"/>
-  <g fill="#a89878" fill-opacity=".7">
-    <circle cx="60" cy="7" r="1.6"/><circle cx="60" cy="143" r="1.6"/><circle cx="6" cy="75" r="1.6"/><circle cx="114" cy="75" r="1.6"/>
-  </g>
+  <ellipse cx="60" cy="75" rx="46" ry="60" fill="none" stroke="#c8a96a" stroke-width="2.5"/>
+  <ellipse cx="60" cy="75" rx="50.5" ry="64.5" fill="none" stroke="#c8a96a" stroke-opacity=".55" stroke-width="1"/>
 </svg>

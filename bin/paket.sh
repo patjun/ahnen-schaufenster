@@ -19,6 +19,7 @@ git archive --format=zip --prefix=ahnen-schaufenster/ -o "$ziel" HEAD -- . \
   ':(exclude)vendor' \
   ':(exclude)tests' \
   ':(exclude)bin' \
+  ':(exclude)tools' \
   ':(exclude)node_modules' \
   ':(exclude)composer.json' \
   ':(exclude)composer.lock' \

@@ -41,6 +41,16 @@ Das Ausrollen entscheidet Patrick; dieses Repository berührt die Produktion nic
   Personen erscheinen als Fenster „nicht sichtbar“ ohne Namen, Daten und Bild.
 - Die Testkonten (`test-…`, siehe unten) gibt es **nur lokal**; auf der Produktion werden sie nicht angelegt.
 
+### Bilder im Fenster
+
+Ins Fenster kommt nur ein Bild der Person selbst: ein Medium vom Typ **Foto** oder **Gemälde**, das **direkt an der
+Person** hängt (GEDCOM `1 OBJE`). Bei mehreren gilt die Reihenfolge aus webtrees' „Medien sortieren“. Medien anderer
+Typen oder ohne Typ (Urkunden, Adress- und Telefonbücher, Scans) und Bilder an Ereignissen (`2 OBJE`, z. B. die
+Taufkirche) erscheinen nie im Fenster, sondern im Lebensweg. Ohne passendes Bild zeigt das Fenster die Silhouette.
+
+Pflege in webtrees: Porträts beim Hochladen oder unter „Mediendatei bearbeiten“ auf den Typ „Foto“ (bzw. „Gemälde“)
+setzen und mit der Person selbst verknüpfen, nicht mit einem Ereignis. Gruppenfotos besser als Ausschnitt anlegen.
+
 ### Kartenkacheln (OpenStreetMap)
 
 Die Karte im Lebensweg lädt Kacheln von `https://tile.openstreetmap.org/{z}/{x}/{y}.png` (mit „© OpenStreetMap-Mitwirkende“).

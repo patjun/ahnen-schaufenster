@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Jungbluth\AhnenSchaufenster\Service;
 
 use Fisharebest\Webtrees\Date;
+use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\MediaFile;
 use Fisharebest\Webtrees\Place;
 
 use function html_entity_decode;
+use function in_array;
+use function strtolower;
 use function strip_tags;
 use function trim;
 
@@ -18,6 +22,9 @@ use function trim;
  */
 class PersonCard
 {
+    /** Medientypen (GEDCOM SOURCE_MEDIA_TYPE), die ein Bild der Person sein können: Foto und Gemälde. */
+    public const array PORTRAIT_TYPES = ['photo', 'painting'];
+
     /**
      * Verborgene oder fehlende Personen: nur {xref, visible:false}, sonst nichts (kein Name, keine Daten, kein Bild).
      *
@@ -40,7 +47,7 @@ class PersonCard
         $card['sex']        = $sex === 'M' || $sex === 'F' ? $sex : 'U';
         $card['birth']      = self::event($person->getBirthDate(), $person->getBirthPlace());
         $card['death']      = self::event($person->getDeathDate(), $person->getDeathPlace());
-        $card['image']      = self::image($person->findHighlightedMediaFile());
+        $card['image']      = self::image(self::portrait($person));
         $card['relation']   = $kinship->label($person);
         $card['directLine'] = $kinship->isDirectLine($person);
 
@@ -62,6 +69,38 @@ class PersonCard
         }
 
         return ['date' => $date_text, 'place' => $place_text];
+    }
+
+    /**
+     * Das Bild im Fenster: das erste Foto oder Gemälde, das direkt an der Person hängt (GEDCOM `1 OBJE`), in der
+     * Reihenfolge, die in webtrees unter „Medien sortieren“ festgelegt ist. Bilder an Ereignissen (`2 OBJE`, z. B. die
+     * Taufkirche) und Medien anderer Typen oder ohne Typ (Urkunden, Adressbücher, Scans) kommen nie ins Fenster.
+     */
+    public static function portrait(Individual $person): MediaFile|null
+    {
+        foreach ($person->facts(['OBJE']) as $fact) {
+            $media = $fact instanceof Fact ? $fact->target() : null;
+
+            if (!$media instanceof Media || !$media->canShow()) {
+                continue;
+            }
+
+            foreach ($media->mediaFiles() as $file) {
+                if ($file->isImage() && !$file->isExternal() && self::isPortraitType($file->type())) {
+                    return $file;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Foto oder Gemälde? Groß-/Kleinschreibung egal (Importe schreiben z. B. `PHOTO`).
+     */
+    public static function isPortraitType(string $type): bool
+    {
+        return in_array(strtolower(trim($type)), self::PORTRAIT_TYPES, true);
     }
 
     /**

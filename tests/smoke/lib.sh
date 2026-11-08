@@ -11,8 +11,8 @@ COOKIE_JAR="${COOKIE_JAR:-${TMPDIR:-/tmp}/schaufenster-smoke-cookies.txt}"
 SMOKE_FAILURES=0
 
 # Baumspezifische Testwerte (Kennungen, Namen) liegen in der lokalen, nicht eingecheckten baum.sh.
-if [ -f "$(dirname "${BASH_SOURCE[0]}")/baum.sh" ]; then
-    source "$(dirname "${BASH_SOURCE[0]}")/baum.sh"
+if [ -f "$(dirname "${BASH_SOURCE[0]:-$0}")/baum.sh" ]; then
+    source "$(dirname "${BASH_SOURCE[0]:-$0}")/baum.sh"
 else
     echo "Fehlt: tests/smoke/baum.sh (Vorlage: tests/smoke/baum.beispiel.sh)" >&2
     return 2 2>/dev/null || exit 2
